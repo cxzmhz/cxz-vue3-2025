@@ -1,0 +1,61 @@
+{
+  "name": "cxz-vue3",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "lint:eslint": "eslint \"src/**/*.{vue,ts,tsx,js}\" --fix",
+    "lint:prettier": "prettier --write \"**/*.{js,ts,tsx,json,css,less,scss,vue,html,md}\"",
+    "lint:stylelint": "stylelint  \"**/*.{css,less,vue,html}\" --fix",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx,vue}": "npx eslint",
+    "src/**/*.{css,less,html,vue}": "npx stylelint --allow-empty-input"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.1.3",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.4.3",
+    "npm-run-all2": "^7.0.2",
+    "postcss": "^8.5.3",
+    "postcss-html": "^1.8.0",
+    "postcss-less": "^6.0.0",
+    "prettier": "^3.3.3",
+    "stylelint": "^16.15.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recess-order": "^6.0.0",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-config-recommended-vue": "^1.6.0",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-less": "^3.0.1",
+    "typescript": "~5.6.3",
+    "vite": "^6.0.5",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-vue-devtools": "^7.6.8",
+    "vue-tsc": "^2.1.10"
+  }
+}

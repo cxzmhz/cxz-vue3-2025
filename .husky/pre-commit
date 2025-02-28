@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx pretty-quick --staged # prettier 格式化修复
+npx lint-staged --allow-empty # 校验
