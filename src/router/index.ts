@@ -11,7 +11,7 @@ export const getRouterCache = () => {
   return routerCache;
 };
 
-function createR({
+function customCreateRouter({
   pages,
   pathMatchReg = /^\/src\/views\/(.*)\/page\.vue$/,
 }: {
@@ -48,7 +48,7 @@ function createR({
   return createRouter(routerData);
 }
 
-const router = createR({
+const router = customCreateRouter({
   pages: import.meta.glob('/src/views/**/page.vue') as Record<
     string,
     () => Promise<Record<string, Component>>
