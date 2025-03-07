@@ -18,6 +18,10 @@
       ></TableComp>
     </div>
   </div>
+  <div class="piniaTest">
+    这个数据来自 pinia
+    {{ counterStore.doubleCount }}
+  </div>
   <EditForm ref="editFormRef" :detail="detail"></EditForm>
 </template>
 
@@ -28,6 +32,10 @@ import EditForm from './components/EditForm.vue';
 import { type PageData, type TableDataType, type TableDataTypeItem } from './types.ts';
 import { ref } from 'vue';
 import { request } from '@/request/request';
+import { useCounterStore } from '@/stores/counter';
+
+// 测试pinia的使用
+const counterStore = useCounterStore();
 
 const tableData = ref<TableDataType>([]);
 const pageData = ref<PageData>({
@@ -111,5 +119,11 @@ const testRequest = async () => {
   display: flex;
   justify-content: space-between;
   width: calc(100vw - 40px);
+}
+
+.piniaTest {
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 </style>

@@ -13,7 +13,8 @@ export const request = Axios.create({
 
 // 加入自定义前缀 用于反向代理
 request.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-console.log('..........env', import.meta.env);
+// const uu = import.meta.url;
+// console.log('.......url', uu);
 
 export interface ResponseData<T = unknown> {
   code: number;

@@ -4,9 +4,12 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import viteCompression from 'vite-plugin-compression'; // 用于 gzip 压缩
+// 以下的3个插件是element-plus的按需引入使用
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
+// import { visualizer } from 'rollup-plugin-visualizer';// 用于分析打包后的代码
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -25,6 +28,7 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
+    // visualizer({ open: true }), // 自动打开分析页面
   ],
   // 开发服务器配置
   server: {
