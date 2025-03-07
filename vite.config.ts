@@ -30,7 +30,8 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000, // 指定开发服务器端口
-    open: true, // 自动打开浏览器
+    // open: true, // 自动打开浏览器
+    // 这个接口不用代理也能访问
     proxy: {
       '/api': {
         target: 'https://cnodejs.org/api/v1',
@@ -42,12 +43,15 @@ export default defineConfig({
       overlay: false, // 禁用错误的全屏覆盖提示
     },
   },
-  build: {},
+  build: {
+    sourcemap: true,
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  base: './',
   // optimizeDeps: {
   //   force: true, // 强制重新预构建并更新缓存，一般是本地开发依赖包的时候使用（这个时候，依赖包的代码改变了，但是版本号都没有变化），可以直接在vite命令的后面加上--force也能实现一样的效果
   // },

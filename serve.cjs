@@ -5,6 +5,10 @@ const fs = require('fs');
 const morgan = require('morgan');
 // const { createProxyMiddleware } = require('http-proxy-middleware');
 
+// 这里可以通过cross-env插件来设置环境变量，是一个功能的测试，不影响当前文件的功能
+const titleName = process.env.VITE_TITLE_NAME;
+console.log('........titleName', titleName);
+
 const app = express();
 app.use(morgan('tiny'));
 
