@@ -49,6 +49,19 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          worker: ['./src/workers/worker.ts'],
+          // vue: ['vue', 'vue-router', 'pinia'],
+          // element: ['element-plus'],
+          // axios: ['axios'],
+          // echarts: ['echarts'],
+          // lodash: ['lodash'],
+          // dayjs: ['dayjs'],
+        },
+      },
+    },
   },
   resolve: {
     alias: {

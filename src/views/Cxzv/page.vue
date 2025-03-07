@@ -112,6 +112,25 @@ const testRequest = async () => {
   });
   console.log('.............res', res);
 };
+
+// 使用URL构造器确保正确路径
+const worker = new Worker(
+  new URL('@/workers/worker.ts', import.meta.url),
+  { type: 'module' }, // 如果需要使用ES模块
+);
+
+// 发送消息
+worker.postMessage({ num: 40 });
+
+// 接收消息
+worker.onmessage = (event) => {
+  console.log('计算结果:', event.data);
+};
+
+// 错误处理
+worker.onerror = (error) => {
+  console.error('Worker error:', error);
+};
 </script>
 
 <style lang="less" scoped>
