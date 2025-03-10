@@ -113,6 +113,7 @@ const testRequest = async () => {
   console.log('.............res', res);
 };
 
+// web worker 的使用举例
 // 使用URL构造器确保正确路径
 const worker = new Worker(
   new URL('@/workers/worker.ts', import.meta.url),
@@ -131,6 +132,23 @@ worker.onmessage = (event) => {
 worker.onerror = (error) => {
   console.error('Worker error:', error);
 };
+
+// 这里的toSmallCase方法在custom.d.ts中已经声明过了，所以ts不会报错
+// String.prototype.toSmallCase = function () {
+//   return this.toLowerCase();
+// };
+// const str = 'aaB';
+// console.log(str.toSmallCase());
+
+// 这里custom.d.ts中已经声明过了，不需要再使用let声明了，重新赋值就可以了，但在模块里面这么使用是不符合规范的，因为这样子就相当于是直接定义一个全局变量了，会报错
+// logMessage = function (message) {
+//   console.log(message);
+// };
+// logMessage('aa');
+
+// 这里custom.d.ts中已经声明过了，不需要再使用let声明了，重新赋值就可以了，但在模块里面这么使用是不符合规范的，因为这样子就相当于是直接定义一个全局变量了，会报错
+// logVar = 'aaa';
+// console.log(logVar);
 </script>
 
 <style lang="less" scoped>
