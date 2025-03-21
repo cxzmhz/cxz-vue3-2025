@@ -1,11 +1,11 @@
-import type { Component } from 'vue';
+import { type Component } from 'vue';
 import {
   createRouter,
   createWebHistory,
   type RouteRecordRaw,
   type RouterHistory,
 } from 'vue-router';
-
+// import Home from '../views/Home/page.vue';
 const routerCache: string[] = [];
 export const getRouterCache = () => {
   return routerCache;
@@ -33,13 +33,14 @@ function customCreateRouter({
       if (routerPath === 'home') {
         routerPath = '';
       }
-      // const Comp = (await (pages[path])) as unknown as {default: any};
+      // console.log('..........pages[path]', pages[path]);
       const realPath = `/${routerPath}`;
       routerCache.push(realPath);
       routerData.routes.push({
         path: realPath,
         name,
         component: pages[path],
+        // component: defineAsyncComponent(pages[path]),
       });
     }
   });
@@ -69,9 +70,17 @@ const router = customCreateRouter({
 //       // route level code-splitting
 //       // this generates a separate chunk (About.[hash].js) for this route
 //       // which is lazy-loaded when the route is visited.
-//       component: () => import('../views/About.vue'),
+//       component: () => import('../views/About/page.vue'),
+//     },
+//     {
+//       path: '/cxzv',
+//       name: 'cxzv',
+//       // route level code-splitting
+//       // this generates a separate chunk (About.[hash].js) for this route
+//       // which is lazy-loaded when the route is visited.
+//       component: () => import('../views/Cxzv/page.vue'),
 //     },
 //   ],
-// })
+// });
 
 export default router;

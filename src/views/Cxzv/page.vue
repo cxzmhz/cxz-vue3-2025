@@ -1,7 +1,7 @@
 <template>
   <div class="formView">
     <div class="headerWrap">
-      <SearchComp :getTableData="getTableData" @refresh-table="handleRefresh"
+      <SearchComp :getTableData="getTableData" @refresh-table="handleRefresh" @cancel="handleCancel"
         ><h2>表单表格组件测试</h2></SearchComp
       >
       <el-button type="primary" @click="onAdd" :style="{ marginBottom: '15px' }">新建</el-button>
@@ -50,6 +50,10 @@ const editFormRef = ref<InstanceType<typeof EditForm> | null>(null);
 
 const handleRefresh = () => {
   console.log('refresh');
+};
+
+const handleCancel = () => {
+  console.log('cancel');
 };
 const onAdd = () => {
   editFormRef.value?.onOpen();
@@ -115,6 +119,7 @@ const testRequest = async () => {
 
 // web worker 的使用举例
 // 使用URL构造器确保正确路径
+console.log('..........import.meta', import.meta);
 const worker = new Worker(
   new URL('@/workers/worker.ts', import.meta.url),
   { type: 'module' }, // 如果需要使用ES模块

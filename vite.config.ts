@@ -4,7 +4,8 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import viteCompression from 'vite-plugin-compression'; // 用于 gzip 压缩
-// 以下的3个插件是element-plus的按需引入使用
+// 以下的3个插件是element-plus的按需引入使用，
+// 其中AutoImport和Components都是处理自动导入的，只不过AutoImport是vue的api这些，Components是第三方组件
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';

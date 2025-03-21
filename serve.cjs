@@ -23,7 +23,7 @@ app.use('/', express.static(path.resolve(__dirname, './dist/'), {}));
 //   res.send(html);
 // });
 
-// vite的原理
+// vite的原理代码，跟当前文件的内容无关
 // app.get('/*.js', (req, res) => {
 //   const reqPath = req.path;
 //   const file = fs.readFileSync(path.resolve(__dirname, `.${reqPath}`), 'utf-8');
@@ -48,8 +48,8 @@ app.use('/', (req, res) => {
   res.send(html);
 });
 
+// 反向代理
 // app.use('/joy', createProxyMiddleware({
-//   // target: 'http://joydev.cd74ca19ae1504568b033139317176752.cn-shenzhen.alicontainer.com/', // 开发环境
 //   target: 'http://10.79.21.128:9201/', // 测试环境
 //   changeOrigin: true,
 //   pathRewrite: path => path.replace(/^\/joy/, ''),

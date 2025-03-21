@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot />
-    <el-form :model="form" label-width="auto" :inline="true" class="searchForm">
+    <el-form :model="form" :inline="true" class="searchForm">
       <el-form-item label="姓名">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -27,7 +27,8 @@ import { reactive } from 'vue';
 const props = defineProps<{
   getTableData: () => void;
 }>();
-const emit = defineEmits(['refresh-table']);
+const emit = defineEmits<{ (event: 'refresh-table'): void; (event: 'cancel'): void }>();
+// const emit = defineEmits(['refresh-table', 'cancel']); // 这2种声明emit的方式都是可以的
 
 const form = reactive({
   name: '',
@@ -40,6 +41,7 @@ const onSubmit = () => {
   console.log('.....formdata', form);
   props.getTableData();
   emit('refresh-table');
+  emit('cancel');
 };
 
 const onCancel = () => {
