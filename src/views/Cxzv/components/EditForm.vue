@@ -31,7 +31,7 @@
 </template>
 <script lang="ts" setup>
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { effect, reactive, ref, watchEffect } from 'vue';
+import { effect, onMounted, reactive, ref, watchEffect } from 'vue';
 import type { TableDataTypeItem } from '../types';
 
 const { detail } = defineProps<{
@@ -42,6 +42,10 @@ watchEffect(() => {}, {
   onTrack() {
     debugger;
   },
+});
+
+onMounted(() => {
+  console.log('........editform-onMounted');
 });
 
 // watchEffect 和 effect 的区别：watchEffect是面向开发者的高层 API，封装了依赖追踪和生命周期管理逻辑，effect 是响应式系统的底层 API，属于 @vue/reactivity 模块的核心实现

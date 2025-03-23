@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import type { PageData, TableDataType, TableDataTypeItem } from '../types';
 
 const props = defineProps<{
@@ -35,6 +36,10 @@ const props = defineProps<{
 }>();
 
 const { currentPage, pageSize, total } = props.pageData;
+
+onMounted(() => {
+  console.log('........tablecomp-onMounted');
+});
 const handleSizeChange = (size: number) => {
   console.log(size);
   props.getTableData();

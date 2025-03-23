@@ -8,6 +8,9 @@
       <el-button type="primary" @click="testRequest" :style="{ marginBottom: '15px' }"
         >测试请求</el-button
       >
+      <el-button type="primary" @click="onShowModal" :style="{ marginBottom: '15px' }"
+        >打开自定义的modal</el-button
+      >
     </div>
     <div class="contentWarp">
       <TableComp
@@ -30,9 +33,10 @@ import SearchComp from './components/SearchComp.vue';
 import TableComp from './components/TableComp.vue';
 import EditForm from './components/EditForm.vue';
 import { type PageData, type TableDataType, type TableDataTypeItem } from './types.ts';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { request } from '@/request/request';
 import { useCounterStore } from '@/stores/counter';
+import { useModal } from '@/components/Modal/modal';
 
 // 测试pinia的使用
 const counterStore = useCounterStore();
@@ -47,6 +51,24 @@ const pageData = ref<PageData>({
 const detail = ref<TableDataTypeItem>();
 
 const editFormRef = ref<InstanceType<typeof EditForm> | null>(null);
+
+const { show } = useModal();
+
+onMounted(() => {
+  console.log('........cxzv-onMounted');
+});
+const onShowModal = () => {
+  show({
+    width: 800,
+    title: '系统提示',
+    content: (h) => {
+      return h('div', 'hello');
+    },
+    onConfirm: () => {
+      console.log('确认删除');
+    },
+  });
+};
 
 const handleRefresh = () => {
   console.log('refresh');
@@ -119,7 +141,7 @@ const testRequest = async () => {
 
 // web worker 的使用举例
 // 使用URL构造器确保正确路径
-console.log('..........import.meta', import.meta);
+// console.log('..........import.meta', import.meta);
 const worker = new Worker(
   new URL('@/workers/worker.ts', import.meta.url),
   { type: 'module' }, // 如果需要使用ES模块

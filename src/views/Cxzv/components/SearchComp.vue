@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 const props = defineProps<{
   getTableData: () => void;
 }>();
@@ -34,6 +34,10 @@ const form = reactive({
   name: '',
   gender: 'male',
   age: 0,
+});
+
+onMounted(() => {
+  console.log('........searchcomp-onMounted');
 });
 
 const onSubmit = () => {
