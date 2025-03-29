@@ -1,7 +1,7 @@
 import Axios, { type AxiosResponse } from 'axios';
 import { whiteList, StatusCode, errorWhiteList } from './whiteList';
 
-export const request = Axios.create({
+export const axios = Axios.create({
   // 会以正常状态返回错误码
   validateStatus: function (status) {
     return whiteList.indexOf(status) > -1 || errorWhiteList.indexOf(status) > -1;
@@ -12,7 +12,7 @@ export const request = Axios.create({
 });
 
 // 加入自定义前缀 用于反向代理
-request.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 // const uu = import.meta.url;
 // console.log('.......url', uu);
 
@@ -29,7 +29,7 @@ const clearAll = () => {
   // });
 };
 
-request.interceptors.response.use((response: AxiosResponse<ResponseData<unknown>>) => {
+axios.interceptors.response.use((response: AxiosResponse<ResponseData<unknown>>) => {
   // 过期时清空缓存 回到登录页面
   if (
     +response.status === StatusCode.STATUS_401 ||

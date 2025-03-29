@@ -12,5 +12,6 @@ onMounted(() => {
 
 watchEffect(() => {
   console.log('.........effect', counter.value);
+  console.log('.........effect', counter);
 });
 </script>

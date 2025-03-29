@@ -1,6 +1,7 @@
 import pluginVue from 'eslint-plugin-vue';
 import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
+import axiosUnderApi from './eslint-plugin-axios-extends.js';
 
 export default [
   {
@@ -20,6 +21,19 @@ export default [
     rules: {
       'vue/multi-word-component-names': 'off', // 禁用vue文件强制多个单词命名
       '@typescript-eslint/ban-ts-comment': 'off', // 允许使用@ts-ignore
+    },
+  },
+  {
+    files: ['**/*.{ts,vue,tsx}'],
+    rules: {
+      'cxz-plugin/axios-under-api': 'error',
+    },
+    plugins: {
+      'cxz-plugin': {
+        rules: {
+          'axios-under-api': axiosUnderApi,
+        },
+      },
     },
   },
 ];

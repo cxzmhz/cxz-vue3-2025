@@ -1,7 +1,12 @@
 <template>
   <div class="formView">
     <div class="headerWrap">
-      <SearchComp :getTableData="getTableData" @refresh-table="handleRefresh" @cancel="handleCancel"
+      <SearchComp
+        v-model:showGender="showGender"
+        v-model:testModel="testModel"
+        :getTableData="getTableData"
+        @refresh-table="handleRefresh"
+        @cancel="handleCancel"
         ><h2>表单表格组件测试</h2></SearchComp
       >
       <el-button type="primary" @click="onAdd" :style="{ marginBottom: '15px' }">新建</el-button>
@@ -34,9 +39,9 @@ import TableComp from './components/TableComp.vue';
 import EditForm from './components/EditForm.vue';
 import { type PageData, type TableDataType, type TableDataTypeItem } from './types.ts';
 import { onMounted, ref } from 'vue';
-import { request } from '@/request/request';
 import { useCounterStore } from '@/stores/counter';
 import { useModal } from '@/components/Modal/modal';
+import { getCxzvList } from '@/api/cxzvApi/getCxzvList.ts';
 
 // 测试pinia的使用
 const counterStore = useCounterStore();
@@ -52,7 +57,14 @@ const detail = ref<TableDataTypeItem>();
 
 const editFormRef = ref<InstanceType<typeof EditForm> | null>(null);
 
+const testModel = ref(false);
+const showGender = ref(false);
+
 const { show } = useModal();
+
+// watch(testModel, (newVal, oldVal) => {
+//   console.log('...........testModel', newVal, oldVal);
+// });
 
 onMounted(() => {
   console.log('........cxzv-onMounted');
@@ -119,7 +131,7 @@ const getTableData = () => {
 getTableData();
 
 // const testRequest = async () => {
-//   const res = await request.post<{
+//   const res = await axios.post<{
 //     code: number;
 //     message: string;
 //     data: unknown;
@@ -129,14 +141,8 @@ getTableData();
 //   console.log('.............res', res);
 // };
 const testRequest = async () => {
-  const res = await request.get<{
-    code: number;
-    message: string;
-    data: unknown;
-  }>('/topics', {
-    params: {},
-  });
-  console.log('.............res', res);
+  const res = await getCxzvList();
+  console.log(res);
 };
 
 // web worker 的使用举例
