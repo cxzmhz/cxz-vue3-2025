@@ -30,7 +30,7 @@ const { testModel = false, getTableData } = defineProps<{
 }>();
 const showGender = defineModel('showGender');
 
-// 通过props中声明v-model的变量，在通过“update:变量名”的方式去触发父组件传进来的属性值的修改，这个是vue3.4之前的写法，3.5之后可以直接使用defineModel("变量名")来处理
+// 通过props中声明v-model的变量，在通过“update:变量名”的方式去触发父组件传进来的属性值的修改，这个是vue3.4之前的写法，3.5之后可以直接使用defineModel("变量名")来处理，但通过defineModel处理后返回的变量如果没有绑定在再低一级组件的v-model上，那么就也需要通过emit(update:xxx)的方式去触发更新了
 const emit = defineEmits<{
   (event: 'refresh-table'): void;
   (event: 'cancel'): void;
@@ -38,6 +38,10 @@ const emit = defineEmits<{
   (event: 'update:showGender', testModel: boolean): void;
 }>();
 // const emit = defineEmits(['refresh-table', 'cancel']); // 这2种声明emit的方式都是可以的
+
+// 通过这种方式去暴露当前代码所在的文件和具体行列
+const trace = new Error().stack;
+console.trace('........trace', trace);
 
 const form = reactive({
   name: '',

@@ -19,7 +19,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue';
+import {
+  defineAsyncComponent,
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  ref,
+} from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
 // 测试pinia的使用
@@ -28,6 +37,30 @@ const changeStroeCount = () => {
   // counterStore.increment();
   counterStore.count++;
 };
+
+onBeforeMount(() => {
+  console.log('父组件beforeMounted');
+});
+
+onMounted(() => {
+  console.log('父组件mounted');
+});
+
+onBeforeUpdate(() => {
+  console.log('父组件onBeforeUpdate');
+});
+
+onUpdated(() => {
+  console.log('父组件onUpdated');
+});
+
+onBeforeUnmount(() => {
+  console.log('父组件onBeforeUnmount');
+});
+
+onUnmounted(() => {
+  console.log('父组件onUnmounted');
+});
 
 // 测试一部组件的使用
 const CxzComp1 = defineAsyncComponent(() => import('@/components/CxzComp1.vue'));

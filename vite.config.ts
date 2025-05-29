@@ -9,6 +9,7 @@ import viteCompression from 'vite-plugin-compression'; // 用于 gzip 压缩
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import Critters from 'critters';
 
 // import { visualizer } from 'rollup-plugin-visualizer';// 用于分析打包后的代码
 
@@ -29,7 +30,34 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
+    // 内联字体
+    {
+      name: 'critters-inline',
+      transformIndexHtml(html) {
+        const critter = new Critters({
+          inlineFonts: true,
+          preload: 'swap',
+          pruneSource: true,
+        });
+        return critter.process(html);
+      },
+    },
     // visualizer({ open: true }), // 自动打开分析页面
+    // chunkSplitPlugin({
+    //   strategy: 'single-vendor', // 默认策略
+    //   customChunk: (args) => {
+    //     const [file, id, moduleId, root] = args;
+    //     // 根据文件路径或大小自定义拆分规则
+    //     if (file.endsWith('.js') && file.includes('node_modules')) {
+    //       return 'vendors'; // 拆分到 vendors chunk
+    //     }
+    //     return null;
+    //   },
+    //   customSplitting: {
+    //     // 根据文件大小拆分示例（需结合 Rollup 配置）
+    //     'large-chunk': [/src\/large-module/], // 拆分特定路径的模块
+    //   }
+    // })
   ],
   // 开发服务器配置
   server: {
@@ -48,19 +76,40 @@ export default defineConfig({
       overlay: false, // 禁用错误的全屏覆盖提示
     },
   },
+  // 静态资源处理
+  assetsInclude: ['**/*.gltf', '**/*.glb'], // 用于 ​​定义 Vite 应视为静态资源的文件类型，​​默认情况下，Vite 已内置常见资源类型（如 .png, .jpg, .svg），但若项目中需要处理非标准文件（如 .csv, .xml）时，需通过此配置显式声明
   build: {
+    target: 'esnext', // 使用现代浏览器的最新语法
     sourcemap: true,
+    minify: 'esbuild', // 默认是esbuild，terser能够提供更高的压缩比，而esbuild压缩速度更快
+    assetsInlineLimit: 4096, // 小于 4KB 的资源内联为 Base64
+    // 可以通过这种方式配置多个html入口
+    // rollupOptions: {
+    //   input: {
+    //     main: resolve(__dirname, 'index.html'),
+    //     nested: resolve(__dirname, 'nested/index.html'),
+    //   },
+    // },
     rollupOptions: {
       output: {
-        manualChunks: {
-          worker: ['./src/workers/worker.ts'],
-          // vue: ['vue', 'vue-router', 'pinia'],
-          // element: ['element-plus'],
-          // axios: ['axios'],
-          // echarts: ['echarts'],
-          // lodash: ['lodash'],
-          // dayjs: ['dayjs'],
+        manualChunks(id) {
+          // 手动拆分大文件（例如超过50KB）
+          if (id.includes('node_modules')) {
+            return 'vendors';
+          }
+          if (id.includes('src/workers/worker.ts')) {
+            return 'worker';
+          }
         },
+        // manualChunks: {
+        //   worker: ['./src/workers/worker.ts'],
+        // // vue: ['vue', 'vue-router', 'pinia'],
+        // // element: ['element-plus'],
+        // // axios: ['axios'],
+        // // echarts: ['echarts'],
+        // // lodash: ['lodash'],
+        // // dayjs: ['dayjs'],
+        // },
       },
     },
   },
@@ -70,7 +119,8 @@ export default defineConfig({
     },
   },
   base: './',
-  // optimizeDeps: {
-  //   force: true, // 强制重新预构建并更新缓存，一般是本地开发依赖包的时候使用（这个时候，依赖包的代码改变了，但是版本号都没有变化），可以直接在vite命令的后面加上--force也能实现一样的效果
-  // },
+  optimizeDeps: {
+    include: ['axios'], // 强制预构建的依赖
+    // force: true, // 强制重新预构建并更新缓存，一般是本地开发依赖包的时候使用（这个时候，依赖包的代码改变了，但是版本号都没有变化），可以直接在vite命令的后面加上--force也能实现一样的效果
+  },
 });

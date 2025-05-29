@@ -3,11 +3,37 @@ import { RouterView } from 'vue-router';
 import { ElConfigProvider } from 'element-plus';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import 'dayjs/locale/zh-cn';
+// import { ref } from 'vue';
+
+// const list = ref<number[]>([]);
+
+// for (let i = 0; i < 1000; i++) {
+//   list.value.push(i);
+// }
+
+window.addEventListener('popstate', (e) => {
+  console.log('popstate', e);
+});
 </script>
 
 <template>
   <el-config-provider size="default" :z-index="2000" :locale="zhCn">
     <RouterView />
+    <!-- <img
+      alt="Vue logo"
+      class="logo"
+      src="https://img2.baidu.com/it/u=2864910610,3451108898&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667"
+      width="125"
+      height="125"
+    />
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="https://img2.baidu.com/it/u=923444017,642453127&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1067"
+      width="125"
+      height="125"
+    />
+    <div v-for="i in list" :key="i">{{ i }}</div> -->
   </el-config-provider>
   <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />

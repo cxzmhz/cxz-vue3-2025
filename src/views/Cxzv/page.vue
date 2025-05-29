@@ -30,6 +30,18 @@
     这个数据来自 pinia
     {{ counterStore.doubleCount }}
   </div>
+  <!-- <VirtualList :items="virtualListItems" v-slot="slotProps">
+    <div>{{ slotProps.item }}</div>
+  </VirtualList> -->
+  <ul class="scroll-container">
+    <div class="actual-height-container">
+      <div class="tranlate-container">
+        <li v-for="(item, i) in actualRenderData" :key="i" class="tranlate-container-item">
+          {{ item }}
+        </li>
+      </div>
+    </div>
+  </ul>
   <EditForm ref="editFormRef" :detail="detail"></EditForm>
 </template>
 
@@ -37,11 +49,49 @@
 import SearchComp from './components/SearchComp.vue';
 import TableComp from './components/TableComp.vue';
 import EditForm from './components/EditForm.vue';
+// import VirtualList from './components/VirtualList.vue';
 import { type PageData, type TableDataType, type TableDataTypeItem } from './types.ts';
 import { onMounted, ref } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 import { useModal } from '@/components/Modal/modal';
 import { getCxzvList } from '@/api/cxzvApi/getCxzvList.ts';
+import useVirtualList from './hook/useVirtual.ts';
+import { increment } from '@/common/moduletest.ts';
+
+const virtualListItems = ref<string[]>([]);
+
+increment();
+
+const { actualRenderData } = useVirtualList({
+  data: virtualListItems, // 列表项数据
+  itemHeight: 100,
+  size: 10,
+  scrollContainer: '.scroll-container', // 滚动容器
+  actualHeightContainer: '.actual-height-container', // 渲染实际高度的容器
+  translateContainer: '.tranlate-container', // 需要偏移的目标元素
+  itmeContainer: '.tranlate-container-item',
+});
+
+const genListData = () => {
+  const list = [];
+  for (let i = 0; i < 1000; i++) {
+    // list.push(`${i}`);
+    if (Math.random() > 0.2) {
+      list.push(`${i}`);
+    } else {
+      list.push(
+        '这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度这是段超出长度的文本，用来测试虚拟列表会不会自适应不用高度',
+      );
+    }
+  }
+  virtualListItems.value = list;
+};
+setTimeout(() => {
+  genListData();
+}, 1000);
+
+// onMounted(() => {
+// });
 
 // 测试pinia的使用
 const counterStore = useCounterStore();
@@ -195,5 +245,10 @@ worker.onerror = (error) => {
   margin-top: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+
+.scroll-container {
+  height: 300px;
+  overflow: auto;
 }
 </style>
