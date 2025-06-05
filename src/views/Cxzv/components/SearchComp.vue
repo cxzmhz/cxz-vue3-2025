@@ -28,6 +28,7 @@ const { testModel = false, getTableData } = defineProps<{
   testModel: boolean;
   getTableData: () => void;
 }>();
+// vue3.4 后可以通过defineModel处理props中声明的v-model变量
 const showGender = defineModel('showGender');
 
 // 通过props中声明v-model的变量，在通过“update:变量名”的方式去触发父组件传进来的属性值的修改，这个是vue3.4之前的写法，3.5之后可以直接使用defineModel("变量名")来处理，但通过defineModel处理后返回的变量如果没有绑定在再低一级组件的v-model上，那么就也需要通过emit(update:xxx)的方式去触发更新了
