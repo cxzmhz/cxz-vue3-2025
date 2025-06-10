@@ -13,9 +13,6 @@ export default [
     name: 'app/files-to-ignore',
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
-  {
-    ignorePatterns: ['/auto-imports.d.ts', '/components.d.ts'],
-  },
   // 'plugin:prettier/recommended': eslint集成prettier
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),

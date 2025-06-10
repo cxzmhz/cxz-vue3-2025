@@ -21,6 +21,8 @@ app.mount('#app');
 window.addEventListener('vite:preloadError', () => {
   window.location.reload(); // 例如，刷新页面
 });
+
+// 统计fcp fp
 const observer = new PerformanceObserver((list) => {
   list.getEntries().forEach((entry) => {
     console.log('..........entry', entry);
@@ -34,14 +36,16 @@ const observer = new PerformanceObserver((list) => {
 });
 observer.observe({ entryTypes: ['paint'], buffered: true });
 
+// 统计LCP
 const lcpObserver = new PerformanceObserver((list) => {
   console.log('...list', list);
   // const entries = list.getEntries();
-  // const lcpEntry = entries[entries.length - 1]; // 最后一个元素为最终LCP[4](@ref)
+  // const lcpEntry = entries[entries.length - 1]; // 最后一个元素为最终LCP
   // console.log('LCP元素:', entries);
 });
 lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
+// 统计CLS
 // let clsValue = 0;
 const clsObserver = new PerformanceObserver((list) => {
   console.log('...list', list);
@@ -55,6 +59,7 @@ const clsObserver = new PerformanceObserver((list) => {
 });
 clsObserver.observe({ type: 'layout-shift', buffered: true });
 
+// 统计每个资源的加载时间
 const resourceObserver = new PerformanceObserver((list) => {
   console.log('...list', list);
   // list.getEntries().forEach((entry) => {
